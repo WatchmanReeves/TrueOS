@@ -1,15 +1,371 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrueOS – Redirecting…</title>
-    <link rel="canonical" href="/trueos.html" />
-    <meta http-equiv="refresh" content="0; url=trueos.html" />
-    <script>window.location.replace('trueos.html');</script>
-    <style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu; padding:2rem;}</style>
-  </head>
-  <body>
-    <p>Redirecting to <a href="trueos.html">trueos.html</a>…</p>
-  </body>
-  </html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueOS | The Future of Sovereign AI</title>
+    <meta name="description" content="TrueOS is a sovereign, deterministic cognitive OS. Experience absolute privacy and logical certainty on your device—no cloud, no compromises." />
+    <link rel="canonical" href="/" />
+    <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TrueOS | The Future of Sovereign AI" />
+    <meta property="og:description" content="A sovereign, deterministic cognitive partner—no cloud, no compromises." />
+    <meta property="og:url" content="https://trueos.io/" />
+    <meta property="og:image" content="/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TrueOS | The Future of Sovereign AI" />
+    <meta name="twitter:description" content="A sovereign, deterministic cognitive partner—no cloud, no compromises." />
+    <meta name="twitter:image" content="/assets/og-image.png" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <script>
+      // Tailwind CDN config for class-based dark mode
+      window.tailwind = { config: { darkMode: 'class' } };
+    </script>
+    <script>
+      // Apply saved or system theme before paint (no flash)
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'system';
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var useDark = t === 'dark' || (t === 'system' && systemDark);
+          document.documentElement.classList.toggle('dark', useDark);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --background-start-rgb: 240,240,240; --background-end-rgb: 255,255,255; --text-color:#111827; --card-bg: rgba(255,255,255,0.6); --card-border: rgba(209,213,219,0.5); --blur-strength:10px; }
+        html.dark { --background-start-rgb:17,24,39; --background-end-rgb:17,24,39; --text-color:#f3f4f6; --card-bg: rgba(31,41,55,0.5); --card-border: rgba(75,85,99,0.5); --blur-strength:12px; }
+        body { font-family:'Inter', sans-serif; background-color: rgb(var(--background-start-rgb)); color: var(--text-color); transition: background-color .5s ease, color .5s ease; }
+        .liquid-card { background-color: var(--card-bg); border:1px solid var(--card-border); backdrop-filter: blur(var(--blur-strength)); -webkit-backdrop-filter: blur(var(--blur-strength)); transition: background-color .5s ease, border-color .5s ease; }
+        .gradient-text { background: linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-fill-color:transparent; }
+        .scroll-reveal { opacity:0; transform: translateY(30px); transition: opacity .8s ease-out, transform .8s ease-out; }
+        .scroll-reveal.visible { opacity:1; transform: translateY(0); }
+        .theme-button { transition: transform .2s ease, background-color .3s ease; }
+        .theme-button:hover { transform: scale(1.1); }
+        .theme-button.active { background-color:#3b82f6; color:#fff; }
+        #graph-container { position:relative; width:100%; height:450px; }
+        .graph-node { position:absolute; width:100px; height:60px; border-radius:.75rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.75rem; padding:4px; transition: all .5s ease-in-out; box-shadow:0 4px 15px rgba(0,0,0,.2); }
+        .graph-line { position:absolute; background-color: var(--card-border); height:2px; transform-origin:left center; transition: width 1s ease-in-out; width:0; }
+        .path-glow { animation: path-glow-anim 1s ease-in-out forwards; }
+        @keyframes path-glow-anim { from{width:0} to{width:100%} }
+        .node-glow { animation: node-glow-anim .5s ease-in-out forwards; }
+        @keyframes node-glow-anim { 0%{ box-shadow:0 0 0 0 rgba(59,130,246,.7);} 100%{ box-shadow:0 0 20px 10px rgba(59,130,246,0); transform: scale(1.05);} }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Header & Theme Toggle -->
+    <header class="fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter">
+                TrueOS
+            </div>
+            <div class="flex items-center space-x-2">
+                <button id="theme-light" class="theme-button p-2 rounded-full leading-none" title="Light Mode" aria-label="Light Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zM3.364 2.05a.5.5 0 0 1 .707 0l1.415 1.415a.5.5 0 0 1-.708.707L3.364 2.757a.5.5 0 0 1 0-.707zm7.071 7.071a.5.5 0 0 1 .707 0l1.415 1.414a.5.5 0 1 1-.707.708l-1.415-1.415a.5.5 0 0 1 0-.707zM16 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 16 8zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707L12.243 4.465a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zM4.464 11.536a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm0-7.072a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>
+                </button>
+                 <button id="theme-dark" class="theme-button p-2 rounded-full leading-none" title="Dark Mode" aria-label="Dark Mode">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>
+                </button>
+                 <button id="theme-system" class="theme-button p-2 rounded-full leading-none" title="System Preference" aria-label="System Preference">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10.5 1.5a.5.5 0 0 0-.5-.5h-10a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-11z"/><path d="M4 1.5a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5h-1zm9.5.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-11z"/></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center pt-20">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-6 leading-tight scroll-reveal">
+                    AI That Reasons With <span class="gradient-text">Your Truth</span>
+                </h1>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-600 dark:text-gray-400 mb-10 scroll-reveal" style="transition-delay: 200ms;">
+                    Introducing TrueOS: A sovereign, deterministic cognitive partner. Experience absolute privacy and logical certainty, right on your device. No cloud, no compromises.
+                </p>
+                <div class="scroll-reveal" style="transition-delay: 400ms;">
+                    <a href="#mission" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 shadow-lg">
+                        Discover the Mission
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Old Paradigm -->
+        <section class="py-20 lg:py-32">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-3 scroll-reveal">The Old Paradigm</h2>
+                <h3 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 scroll-reveal" style="transition-delay: 200ms;">The Illusion of Cloud Intelligence</h3>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 scroll-reveal" style="transition-delay: 400ms;">
+                    Today's AI demands a trade-off. To access its power, you surrender your data to corporate servers. This cloud-first model is built on probabilistic guesswork, leading to "hallucinations" and opaque reasoning. It's a powerful tool, but it comes at the cost of your privacy, control, and intellectual sovereignty.
+                </p>
+            </div>
+        </section>
+        
+        <!-- The Fortress -->
+        <section class="py-20 lg:py-32">
+             <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-3">Local-First Sovereignty</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">The Fortress of Your Mind</h3>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                        TrueOS is architected as a self-contained "digital brain" on your device. Your data, your principles, and your creations are yours alone. This isn't a service you rent; it's a tool you own. Privacy isn't a policy—it's an architectural guarantee.
+                    </p>
+                </div>
+                <div class="scroll-reveal liquid-card rounded-2xl p-6" style="transition-delay: 200ms;">
+                   <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-300 dark:border-gray-600">
+                                <th class="py-3 font-semibold">Capability</th>
+                                <th class="py-3 font-semibold text-gray-500 dark:text-gray-400">Standard Cloud AI</th>
+                                <th class="py-3 font-semibold text-blue-500">TrueOS (Local-First)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-300/50 dark:border-gray-600/50">
+                                <td class="py-3 pr-2 font-medium">Data Privacy</td>
+                                <td class="py-3 pr-2 text-gray-500 dark:text-gray-400">Processed on their servers</td>
+                                <td class="py-3 pr-2 font-semibold">Stays on your device. Always.</td>
+                            </tr>
+                            <tr class="border-b border-gray-300/50 dark:border-gray-600/50">
+                                <td class="py-3 pr-2 font-medium">User Control</td>
+                                <td class="py-3 pr-2 text-gray-500 dark:text-gray-400">You are a user</td>
+                                <td class="py-3 pr-2 font-semibold">You are the owner</td>
+                            </tr>
+                             <tr class="border-b border-gray-300/50 dark:border-gray-600/50">
+                                <td class="py-3 pr-2 font-medium">Offline Access</td>
+                                <td class="py-3 pr-2 text-gray-500 dark:text-gray-400">Requires connection</td>
+                                <td class="py-3 pr-2 font-semibold">Fully functional offline</td>
+                            </tr>
+                             <tr>
+                                <td class="py-3 pr-2 font-medium">Ongoing Costs</td>
+                                <td class="py-3 pr-2 text-gray-500 dark:text-gray-400">Subscription-based</td>
+                                <td class="py-3 pr-2 font-semibold">One-time purchase</td>
+                            </tr>
+                        </tbody>
+                   </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deterministic Engine -->
+        <section class="py-20 lg:py-32">
+             <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="md:order-2 scroll-reveal">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-3">Deterministic by Design</h2>
+                    <h3 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">An Engine of Certainty</h3>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                        We replaced probabilistic guesswork with deterministic logic. TrueOS operates on an "algebra" of your defined principles, not statistical predictions. This means no hallucinations, consistent results you can trust, and conclusions that are logically derived from your own framework.
+                    </p>
+                </div>
+                <div class="md:order-1 flex space-x-4 scroll-reveal" style="transition-delay: 200ms;">
+                    <div class="flex-1 liquid-card rounded-2xl p-8 text-center">
+                        <h4 class="font-bold text-lg mb-2">Probabilistic AI</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">"Based on my training data, this is the most likely answer."</p>
+                        <div class="mt-4 text-4xl">🤔</div>
+                    </div>
+                     <div class="flex-1 liquid-card rounded-2xl p-8 text-center border-2 border-blue-500/50">
+                        <h4 class="font-bold text-lg mb-2">TrueOS Logic</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">"Based on the rules you defined, this is the only possible answer."</p>
+                        <div class="mt-4 text-4xl">✅</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GraphRAG -->
+        <section class="py-20 lg:py-32">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-3 scroll-reveal">Connected Knowledge</h2>
+                <h3 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 scroll-reveal" style="transition-delay: 200ms;">Reasoning Beyond a Search Box</h3>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 scroll-reveal" style="transition-delay: 400ms;">
+                    Standard AI finds similar words. TrueOS understands relationships. Using advanced GraphRAG, it performs "multi-hop reasoning" to trace logical connections across your entire knowledge base, uncovering insights that are impossible for conventional systems to find.
+                </p>
+            </div>
+            <div class="liquid-card rounded-2xl p-6 lg:p-10 scroll-reveal">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-8">
+                    <div class="lg:w-1/3 mb-6 lg:mb-0">
+                        <p class="font-semibold mb-2">Example Complex Query:</p>
+                        <p class="text-gray-600 dark:text-gray-400 italic">"Which of my constitutional principles, supported by Isaiah, contradicts Gnosticism?"</p>
+                        <button id="run-animation" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-transform transform hover:scale-105 shadow-lg">
+                            Visualize Reasoning
+                        </button>
+                    </div>
+                    <div class="lg:w-2/3">
+                        <div id="graph-container"></div>
+                    </div>
+                </div>
+                 <div id="answer-box" class="mt-6 p-4 bg-gray-200/50 dark:bg-gray-800/50 rounded-lg hidden">
+                    <p class="font-semibold text-sm mb-2">Generated Answer:</p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">The principle of 'Divine Sovereignty,' when cross-referenced with Isaiah 45:7, identifies a direct contradiction with the Gnostic assertion of dualistic creators, reinforcing a monotheistic, sovereign causality.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission -->
+        <section id="mission" class="py-20 lg:py-32">
+            <div class="max-w-5xl mx-auto text-center liquid-card rounded-3xl p-10 lg:p-20">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-blue-500 mb-3 scroll-reveal">Our Mission</h2>
+                <h3 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-6 scroll-reveal" style="transition-delay: 200ms;">
+                    <span class="gradient-text">Truth, Love, Life.</span>
+                </h3>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 scroll-reveal" style="transition-delay: 400ms;">
+                    We are building tools to produce Truth, Love, and Life, and to Restrain Lies, Hate, and Evil. TrueOS is more than software; it's the foundation for a new ecosystem of technology built on principle. It is an instrument of personal responsibility, intellectual sovereignty, and discerning judgment.
+                </p>
+                <div class="scroll-reveal" style="transition-delay: 600ms;">
+                    <h4 class="font-bold mb-4">An Invitation to the Watchmen</h4>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        If you are a thinker, leader, builder, or artist who recognizes the need for tools of discernment in this age, we invite you to join us. Let's build a more truthful, coherent, and principled future together.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-10 border-t border-gray-200 dark:border-gray-800">
+        <p class="text-gray-500 dark:text-gray-400 text-sm">&copy; 2025 TrueOS. All Rights Reserved. Forging a Principled Future.</p>
+    </footer>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme Toggle Logic
+        const lightBtn = document.getElementById('theme-light');
+        const darkBtn = document.getElementById('theme-dark');
+        const systemBtn = document.getElementById('theme-system');
+        const html = document.documentElement;
+
+        function applyTheme(theme) {
+            localStorage.setItem('theme', theme);
+            if (theme === 'system') {
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.classList.toggle('dark', systemPrefersDark);
+            } else {
+                html.classList.toggle('dark', theme === 'dark');
+            }
+            updateActiveButton(theme);
+        }
+
+        function updateActiveButton(theme) {
+            lightBtn.classList.remove('active');
+            darkBtn.classList.remove('active');
+            systemBtn.classList.remove('active');
+            document.getElementById(`theme-${theme}`).classList.add('active');
+        }
+
+        lightBtn.addEventListener('click', () => applyTheme('light'));
+        darkBtn.addEventListener('click', () => applyTheme('dark'));
+        systemBtn.addEventListener('click', () => applyTheme('system'));
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (localStorage.getItem('theme') === 'system') {
+                applyTheme('system');
+            }
+        });
+
+        const savedTheme = localStorage.getItem('theme') || 'system';
+        applyTheme(savedTheme);
+
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // GraphRAG Animation
+        const animBtn = document.getElementById('run-animation');
+        const graphContainer = document.getElementById('graph-container');
+        const answerBox = document.getElementById('answer-box');
+
+        const nodes = [
+            { id: 'query', text: 'Query', x: 5, y: 40, color: 'bg-gray-500 text-white' },
+            { id: 'principle', text: 'Principle: Divine Sov.', x: 25, y: 10, color: 'bg-blue-500 text-white' },
+            { id: 'isaiah', text: 'Source: Isaiah 45:7', x: 50, y: 10, color: 'bg-purple-500 text-white' },
+            { id: 'gnosticism', text: 'Concept: Gnosticism', x: 25, y: 70, color: 'bg-red-500 text-white' },
+            { id: 'result', text: 'Result: Contradiction', x: 75, y: 40, color: 'bg-green-500 text-white' }
+        ];
+
+        const edges = [
+            { from: 'principle', to: 'isaiah' },
+            { from: 'principle', to: 'result' },
+            { from: 'gnosticism', to: 'result' }
+        ];
+
+        function createGraph() {
+            graphContainer.innerHTML = ''; // Clear previous graph
+            answerBox.classList.add('hidden');
+
+            // Draw nodes
+            nodes.forEach(node => {
+                const nodeEl = document.createElement('div');
+                nodeEl.id = `node-${node.id}`;
+                nodeEl.className = `graph-node ${node.color}`;
+                nodeEl.style.left = `${node.x}%`;
+                nodeEl.style.top = `${node.y}%`;
+                nodeEl.innerHTML = `<span class="block">${node.text}</span>`;
+                graphContainer.appendChild(nodeEl);
+            });
+
+            // Draw lines
+            edges.forEach((edge, index) => {
+                const fromNode = nodes.find(n => n.id === edge.from);
+                const toNode = nodes.find(n => n.id === edge.to);
+                
+                const fromRect = { x: fromNode.x + 100/graphContainer.clientWidth * 50, y: fromNode.y + 60/graphContainer.clientHeight * 30 };
+                const toRect = { x: toNode.x + 100/graphContainer.clientWidth * 50, y: toNode.y + 60/graphContainer.clientHeight * 30 };
+
+                const angle = Math.atan2((toRect.y - fromRect.y)*graphContainer.clientHeight/100, (toRect.x - fromRect.x)*graphContainer.clientWidth/100) * 180 / Math.PI;
+                const length = Math.sqrt(Math.pow((toRect.x - fromRect.x)*graphContainer.clientWidth/100, 2) + Math.pow((toRect.y - fromRect.y)*graphContainer.clientHeight/100, 2));
+
+                const lineEl = document.createElement('div');
+                lineEl.id = `line-${index}`;
+                lineEl.className = 'graph-line';
+                lineEl.style.left = `${fromRect.x}%`;
+                lineEl.style.top = `${fromRect.y}%`;
+                lineEl.style.width = `${length}px`;
+                lineEl.style.transform = `rotate(${angle}deg)`;
+                lineEl.style.setProperty('--line-length', `${length}px`);
+                graphContainer.appendChild(lineEl);
+            });
+        }
+        
+        animBtn.addEventListener('click', () => {
+            createGraph();
+            
+            setTimeout(() => document.getElementById('node-principle').classList.add('node-glow'), 500);
+            setTimeout(() => document.getElementById('node-gnosticism').classList.add('node-glow'), 500);
+            
+            setTimeout(() => document.getElementById('line-0').style.width = document.getElementById('line-0').style.getPropertyValue('--line-length'), 1000);
+            setTimeout(() => document.getElementById('node-isaiah').classList.add('node-glow'), 2000);
+            
+            setTimeout(() => document.getElementById('line-1').style.width = document.getElementById('line-1').style.getPropertyValue('--line-length'), 2500);
+            setTimeout(() => document.getElementById('line-2').style.width = document.getElementById('line-2').style.getPropertyValue('--line-length'), 2500);
+
+            setTimeout(() => document.getElementById('node-result').classList.add('node-glow'), 3500);
+
+            setTimeout(() => {
+                answerBox.classList.remove('hidden');
+                answerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 4000);
+        });
+        
+        createGraph(); // Initial render
+    });
+    </script>
+</body>
+</html>
